@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deliv'It - Role-Based Navigation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .navbar-brand svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .navbar-menu a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .navbar-menu a:hover {
+            color: #667eea;
+            background: #f7fafc;
+        }
+
+        .navbar-menu a:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+
+        .btn-logout {
+            background: #ef4444;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid #667eea;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #667eea;
+            padding: 0.5rem;
+        }
+
+        /* Role Switcher (Demo purposes) */
+        .role-switcher {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .role-switcher h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .role-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .role-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .role-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .role-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .current-role {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            color: #2d3748;
+        }
+
+        .current-role strong {
+            color: #667eea;
+        }
+
+        /* Content Demo */
+        .content-demo {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .content-demo h1 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .content-demo p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 1rem;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .navbar-menu {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 0;
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid #e2e8f0;
+            }
+
+            .navbar-menu.active {
+                display: flex;
+            }
+
+            .navbar-menu a {
+                width: 100%;
+                text-align: left;
+                padding: 0.75rem 1rem;
+            }
+
+            .btn-logout,
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+
+            .role-buttons {
+                flex-direction: column;
+            }
+
+            .role-btn {
+                width: 100%;
+            }
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <!-- Brand Logo -->
+        <a href="#" class="navbar-brand" aria-label="Deliv'It Home">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+            </svg>
+            <span>Deliv'It</span>
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" id="mobileMenuToggle">
+            ☰
+        </button>
+
+        <!-- Navigation Menu -->
+        <ul class="navbar-menu" id="navbarMenu" role="menubar">
+            <!-- Guest Navigation -->
+            <li role="none" class="nav-guest hidden">
+                <a href="login.html" role="menuitem">Login</a>
+            </li>
+            <li role="none" class="nav-guest hidden">
+                <a href="register.html" role="menuitem" class="btn-primary">Register</a>
+            </li>
+
+            <!-- Client Navigation -->
+            <li role="none" class="nav-client hidden">
+                <a href="client-dashboard.html" role="menuitem">Dashboard</a>
+            </li>
+            <li role="none" class="nav-client hidden">
+                <a href="order-management.html" role="menuitem">Orders</a>
+            </li>
+            <li role="none" class="nav-client hidden">
+                <a href="#profile" role="menuitem">Profile</a>
+            </li>
+            <li role="none" class="nav-client hidden">
+                <button class="btn-logout" onclick="logout()" role="menuitem">Logout</button>
+            </li>
+
+            <!-- Delivery Navigation -->
+            <li role="none" class="nav-delivery hidden">
+                <a href="delivery-marketplace.html" role="menuitem">Marketplace</a>
+            </li>
+            <li role="none" class="nav-delivery hidden">
+                <a href="active-deliveries.html" role="menuitem">Active Deliveries</a>
+            </li>
+            <li role="none" class="nav-delivery hidden">
+                <a href="#profile" role="menuitem">Profile</a>
+            </li>
+            <li role="none" class="nav-delivery hidden">
+                <button class="btn-logout" onclick="logout()" role="menuitem">Logout</button>
+            </li>
+
+            <!-- Admin Navigation -->
+            <li role="none" class="nav-admin hidden">
+                <a href="admin-user-management.html" role="menuitem">Users</a>
+            </li>
+            <li role="none" class="nav-admin hidden">
+                <a href="#statistics" role="menuitem">Statistics</a>
+            </li>
+            <li role="none" class="nav-admin hidden">
+                <button class="btn-logout" onclick="logout()" role="menuitem">Logout</button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Role Switcher (Demo Purpose) -->
+    <div class="role-switcher">
+        <h2>Switch User Role (Demo)</h2>
+        <div class="role-buttons">
+            <button class="role-btn" onclick="switchRole('guest')">Guest</button>
+            <button class="role-btn" onclick="switchRole('client')">Client</button>
+            <button class="role-btn" onclick="switchRole('delivery')">Delivery Driver</button>
+            <button class="role-btn" onclick="switchRole('admin')">Admin</button>
+        </div>
+        <div class="current-role">
+            Current Role: <strong id="currentRoleDisplay">Guest</strong>
+        </div>
+    </div>
+
+    <!-- Content Demo -->
+    <div class="content-demo">
+        <h1>Welcome to Deliv'It</h1>
+        <p>Use the role switcher above to see how the navigation changes based on user roles.</p>
+    </div>
+
+    <script>
+        // Initialize with guest role
+        let currentRole = 'guest';
+
+        // Function to switch roles
+        function switchRole(role) {
+            currentRole = role;
+            updateNavigation();
+            updateRoleDisplay();
+            
+            // Update active button
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Close mobile menu if open
+            closeMobileMenu();
+        }
+
+        // Function to update navigation based on role
+        function updateNavigation() {
+            // Hide all navigation items
+            document.querySelectorAll('.nav-guest, .nav-client, .nav-delivery, .nav-admin').forEach(item => {
+                item.classList.add('hidden');
+            });
+
+            // Show navigation items for current role
+            document.querySelectorAll(`.nav-${currentRole}`).forEach(item => {
+                item.classList.remove('hidden');
+            });
+        }
+
+        // Function to update role display
+        function updateRoleDisplay() {
+            const roleNames = {
+                'guest': 'Guest',
+                'client': 'Client',
+                'delivery': 'Delivery Driver',
+                'admin': 'Admin'
+            };
+            document.getElementById('currentRoleDisplay').textContent = roleNames[currentRole];
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                switchRole('guest');
+                alert('You have been logged out successfully.');
+            }
+        }
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navbarMenu = document.getElementById('navbarMenu');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            const isExpanded = navbarMenu.classList.toggle('active');
+            mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
+            mobileMenuToggle.textContent = isExpanded ? '✕' : '☰';
+        });
+
+        // Close mobile menu function
+        function closeMobileMenu() {
+            navbarMenu.classList.remove('active');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.textContent = '☰';
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInside = event.target.closest('.navbar');
+            if (!isClickInside) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close mobile menu on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
+
+        // Initialize navigation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNavigation();
+            updateRoleDisplay();
+        });
+    </script>
+</body>
+</html>

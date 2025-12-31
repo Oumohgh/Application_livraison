@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Deliveries - Deliv'It</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #8b5cf6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .deliveries-content {
+            padding: 1.5rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header h1 {
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .active-badge {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: 0.375rem 0.875rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Delivery Card */
+        .delivery-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            border-left: 4px solid var(--border-color);
+        }
+
+        .delivery-card.active {
+            border-left-color: var(--success-color);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .delivery-card.completed {
+            opacity: 0.7;
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .order-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .order-id {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .order-time {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .reward-amount {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-align: center;
+        }
+
+        .reward-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        .progress-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 3px;
+            background: var(--success-color);
+            z-index: 1;
+            transition: width 0.5s ease;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+        }
+
+        .step.completed .step-icon {
+            background: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+
+        .step.active .step-icon {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .step-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 80px;
+        }
+
+        .step.completed .step-label,
+        .step.active .step-label {
+            color: var(--text-primary);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+            }
+        }
+
+        /* Delivery Locations */
+        .delivery-locations {
+            margin-bottom: 1.5rem;
+        }
+
+        .location-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.875rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        .location-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .location-icon.pickup {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-color);
+        }
+
+        .location-icon.destination {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success-color);
+        }
+
+        .location-details {
+            flex: 1;
+        }
+
+        .location-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.375rem;
+        }
+
+        .location-address {
+            color: var(--text-primary);
+            font-weight: 500;
+            line-height: 1.5;
+            margin-bottom: 0.25rem;
+        }
+
+        .location-contact {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.875rem 1.5rem;
+            border-radius: 10px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            min-width: 160px;
+        }
+
+        .btn-next-step {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-next-step:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-call {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-call:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-navigate {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-navigate:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-help {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-help:hover {
+            background: var(--border-color);
+        }
+
+        .btn-completed {
+            background: var(--border-color);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .btn-completed:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Empty State */
+        .empty-state {
+            background: white;
+            border-radius: 12px;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-browse {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-browse:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .deliveries-content {
+                padding: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .progress-steps {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .progress-steps::before,
+            .progress-line {
+                display: none;
+            }
+
+            .step {
+                flex-direction: row;
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .step-label {
+                max-width: none;
+                text-align: left;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .card-header-row {
+                flex-direction: column;
+            }
+
+            .reward-amount {
+                width: 100%;
+            }
+        }
+
+        /* Success Animation */
+        @keyframes checkmark {
+            0% {
+                transform: scale(0) rotate(45deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(45deg);
+            }
+            100% {
+                transform: scale(1) rotate(45deg);
+            }
+        }
+
+        .step.completed .step-icon i {
+            animation: checkmark 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="index-standalone.html" class="logo">
+                    <i class="bi bi-truck"></i> Deliv'It
+                </a>
+                <div class="user-menu">
+                    <span class="d-none d-md-inline text-secondary">Driver Alex</span>
+                    <div class="user-avatar">DA</div>
+                    <a href="login.html" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="deliveries-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>
+                    <i class="bi bi-lightning-charge-fill"></i> 
+                    Active Deliveries
+                    <span class="active-badge" id="activeCount">2 Active</span>
+                </h1>
+            </div>
+
+            <!-- Deliveries List -->
+            <div id="deliveriesList">
+                <!-- Delivery cards will be dynamically loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample active deliveries data
+        const activeDeliveries = [
+            {
+                id: 'DEL-2024-101',
+                pickup: {
+                    address: '123 Main St, New York, NY 10001',
+                    contact: 'John\'s Electronics',
+                    phone: '+1 (555) 123-4567'
+                },
+                destination: {
+                    address: '456 Oak Ave, Brooklyn, NY 11201',
+                    contact: 'Sarah Johnson',
+                    phone: '+1 (555) 987-6543'
+                },
+                reward: 18.50,
+                acceptedAt: '2:45 PM',
+                currentStatus: 1, // 0: Not Started, 1: Picked Up, 2: On the way, 3: Delivered
+                packageType: 'Small Package'
+            },
+            {
+                id: 'DEL-2024-105',
+                pickup: {
+                    address: '444 West St, Manhattan, NY 10014',
+                    contact: 'Restaurant Supply',
+                    phone: '+1 (555) 234-5678'
+                },
+                destination: {
+                    address: '222 East River Dr, Brooklyn, NY 11249',
+                    contact: 'Ocean View Restaurant',
+                    phone: '+1 (555) 876-5432'
+                },
+                reward: 45.00,
+                acceptedAt: '1:30 PM',
+                currentStatus: 2,
+                packageType: 'Large Package'
+            },
+            {
+                id: 'DEL-2024-098',
+                pickup: {
+                    address: '789 Broadway, New York, NY 10003',
+                    contact: 'Office Supplies Plus',
+                    phone: '+1 (555) 345-6789'
+                },
+                destination: {
+                    address: '321 Park Ave, Manhattan, NY 10022',
+                    contact: 'Tech Startup Inc.',
+                    phone: '+1 (555) 765-4321'
+                },
+                reward: 22.00,
+                acceptedAt: '11:15 AM',
+                currentStatus: 3,
+                packageType: 'Documents'
+            }
+        ];
+
+        const statusSteps = [
+            { id: 0, label: 'Accepted', icon: 'bi-check-circle-fill' },
+            { id: 1, label: 'Picked Up', icon: 'bi-box-seam-fill' },
+            { id: 2, label: 'On the Way', icon: 'bi-truck' },
+            { id: 3, label: 'Delivered', icon: 'bi-geo-alt-fill' }
+        ];
+
+        const nextStepActions = [
+            'Pick Up Package',
+            'Start Delivery',
+            'Mark as Delivered',
+            'Completed'
+        ];
+
+        // Function to render deliveries
+        function renderDeliveries() {
+            const container = document.getElementById('deliveriesList');
+            const activeCount = activeDeliveries.filter(d => d.currentStatus < 3).length;
+            document.getElementById('activeCount').textContent = `${activeCount} Active`;
+
+            if (activeDeliveries.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="bi bi-inbox"></i>
+                        <h3>No Active Deliveries</h3>
+                        <p>You don't have any active deliveries at the moment.</p>
+                        <a href="delivery-marketplace.html" class="btn-browse">
+                            <i class="bi bi-search"></i> Browse Available Deliveries
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = activeDeliveries.map((delivery, index) => {
+                const progressPercentage = (delivery.currentStatus / 3) * 100;
+                const isCompleted = delivery.currentStatus === 3;
+                const cardClass = delivery.currentStatus === 2 ? 'active' : (isCompleted ? 'completed' : '');
+
+                return `
+                    <div class="delivery-card ${cardClass}">
+                        <div class="card-header-row">
+                            <div class="order-info">
+                                <div class="order-id">${delivery.id}</div>
+                                <div class="order-time">
+                                    <i class="bi bi-clock"></i>
+                                    Accepted at ${delivery.acceptedAt}
+                                </div>
+                            </div>
+                            <div class="reward-amount">
+                                <div class="reward-label">REWARD</div>
+                                <div>$${delivery.reward.toFixed(2)}</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-tracker">
+                            <div class="progress-title">Delivery Progress</div>
+                            <div class="progress-steps">
+                                <div class="progress-line" style="width: ${progressPercentage}%"></div>
+                                ${statusSteps.map(step => {
+                                    const stepClass = step.id < delivery.currentStatus ? 'completed' : 
+                                                     step.id === delivery.currentStatus ? 'active' : '';
+                                    return `
+                                        <div class="step ${stepClass}">
+                                            <div class="step-icon">
+                                                <i class="${step.icon}"></i>
+                                            </div>
+                                            <div class="step-label">${step.label}</div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+
+                        <div class="delivery-locations">
+                            <div class="location-item">
+                                <div class="location-icon pickup">
+                                    <i class="bi bi-box-seam-fill"></i>
+                                </div>
+                                <div class="location-details">
+                                    <div class="location-label">Pickup Location</div>
+                                    <div class="location-address">${delivery.pickup.address}</div>
+                                    <div class="location-contact">
+                                        <i class="bi bi-shop"></i> ${delivery.pickup.contact}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="location-item">
+                                <div class="location-icon destination">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                                <div class="location-details">
+                                    <div class="location-label">Delivery Destination</div>
+                                    <div class="location-address">${delivery.destination.address}</div>
+                                    <div class="location-contact">
+                                        <i class="bi bi-person-fill"></i> ${delivery.destination.contact}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            ${isCompleted ? `
+                                <button class="action-btn btn-completed" disabled>
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    Completed
+                                </button>
+                            ` : `
+                                <button class="action-btn btn-next-step" onclick="nextStep(${index})">
+                                    <i class="bi bi-arrow-right-circle-fill"></i>
+                                    ${nextStepActions[delivery.currentStatus]}
+                                </button>
+                                <button class="action-btn btn-call" onclick="callContact('${delivery.currentStatus < 2 ? delivery.pickup.phone : delivery.destination.phone}')">
+                                    <i class="bi bi-telephone-fill"></i>
+                                    Call
+                                </button>
+                                <button class="action-btn btn-navigate" onclick="navigate('${delivery.currentStatus < 2 ? delivery.pickup.address : delivery.destination.address}')">
+                                    <i class="bi bi-compass-fill"></i>
+                                    Navigate
+                                </button>
+                            `}
+                            <button class="action-btn btn-help" onclick="getHelp('${delivery.id}')">
+                                <i class="bi bi-question-circle-fill"></i>
+                                Help
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Function to move to next step
+        function nextStep(index) {
+            const delivery = activeDeliveries[index];
+            
+            if (delivery.currentStatus < 3) {
+                delivery.currentStatus++;
+                renderDeliveries();
+                
+                // Show success feedback
+                const messages = [
+                    'Package picked up successfully!',
+                    'Delivery started! Drive safely.',
+                    'Delivery completed! Well done!',
+                    ''
+                ];
+                
+                if (messages[delivery.currentStatus]) {
+                    showNotification(messages[delivery.currentStatus], 'success');
+                }
+            }
+        }
+
+        // Function to call contact
+        function callContact(phone) {
+            showNotification(`Calling ${phone}...`, 'info');
+            // In a real app, this would initiate a phone call
+            window.location.href = `tel:${phone}`;
+        }
+
+        // Function to navigate
+        function navigate(address) {
+            showNotification(`Opening navigation to: ${address}`, 'info');
+            // In a real app, this would open maps app
+            const encodedAddress = encodeURIComponent(address);
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`, '_blank');
+        }
+
+        // Function to get help
+        function getHelp(orderId) {
+            showNotification(`Opening support for order ${orderId}...`, 'info');
+            // In a real app, this would open support chat or helpline
+        }
+
+        // Notification function
+        function showNotification(message, type) {
+            const colors = {
+                success: 'var(--success-color)',
+                info: 'var(--primary-color)',
+                warning: 'var(--warning-color)',
+                error: 'var(--danger-color)'
+            };
+
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${colors[type]};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                font-weight: 600;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(400px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize page
+        renderDeliveries();
+    </script>
+</body>
+</html>

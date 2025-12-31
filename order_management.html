@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - Deliv'It</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #8b5cf6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Filters Section */
+        .filters-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .filter-tab {
+            padding: 0.625rem 1.25rem;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-tab:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .filter-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-tab .badge {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.125rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .filter-tab.active .badge {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-input-group {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        /* Orders Table Section */
+        .orders-table-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-header h2 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .results-count {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Table */
+        .orders-table {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg-light);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--bg-light);
+        }
+
+        .order-id-cell {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            text-transform: capitalize;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .status-in-progress {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+        }
+
+        .status-delivered {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-cancelled {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .delivery-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .recipient-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .recipient-address {
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+        }
+
+        .btn-view {
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+
+        .btn-view:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+
+        .btn-cancel:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-cancel:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .filter-tabs {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding-bottom: 0.5rem;
+            }
+
+            .orders-table {
+                overflow-x: scroll;
+            }
+
+            table {
+                min-width: 800px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="index-standalone.html" class="logo">
+                    <i class="bi bi-truck"></i> Deliv'It
+                </a>
+                <nav class="d-none d-md-flex gap-3">
+                    <a href="client-dashboard.html" class="text-decoration-none text-secondary">Dashboard</a>
+                    <a href="order-management.html" class="text-decoration-none" style="color: var(--primary-color); font-weight: 600;">Orders</a>
+                </nav>
+                <div class="user-menu">
+                    <span class="d-none d-md-inline text-secondary">John Doe</span>
+                    <div class="user-avatar">JD</div>
+                    <a href="login.html" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Order Management</h1>
+                <p>Track and manage all your delivery orders in one place</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-section">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">
+                        All Orders
+                        <span class="badge" id="count-all">0</span>
+                    </button>
+                    <button class="filter-tab" data-filter="pending">
+                        Pending
+                        <span class="badge" id="count-pending">0</span>
+                    </button>
+                    <button class="filter-tab" data-filter="in-progress">
+                        In Progress
+                        <span class="badge" id="count-in-progress">0</span>
+                    </button>
+                    <button class="filter-tab" data-filter="delivered">
+                        Delivered
+                        <span class="badge" id="count-delivered">0</span>
+                    </button>
+                    <button class="filter-tab" data-filter="cancelled">
+                        Cancelled
+                        <span class="badge" id="count-cancelled">0</span>
+                    </button>
+                </div>
+
+                <div class="search-bar">
+                    <div class="search-input-group">
+                        <i class="bi bi-search"></i>
+                        <input 
+                            type="text" 
+                            class="search-input" 
+                            id="searchInput" 
+                            placeholder="Search by Order ID, recipient name, or address..."
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Table -->
+            <div class="orders-table-section">
+                <div class="table-header">
+                    <h2>Orders List</h2>
+                    <span class="results-count" id="resultsCount">Showing 0 orders</span>
+                </div>
+
+                <div class="orders-table">
+                    <table id="ordersTable">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Delivery</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <!-- Orders will be dynamically loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <i class="bi bi-inbox"></i>
+                    <h3>No orders found</h3>
+                    <p>Try adjusting your filters or search terms</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample orders data
+        const allOrders = [
+            {
+                id: 'ORD-2024-001',
+                date: '2024-01-15',
+                dateFormatted: 'Jan 15, 2024',
+                time: '2:30 PM',
+                status: 'in-progress',
+                recipient: 'Sarah Johnson',
+                address: '123 Main St, New York, NY 10001'
+            },
+            {
+                id: 'ORD-2024-002',
+                date: '2024-01-14',
+                dateFormatted: 'Jan 14, 2024',
+                time: '11:45 AM',
+                status: 'pending',
+                recipient: 'Michael Chen',
+                address: '456 Oak Ave, Brooklyn, NY 11201'
+            },
+            {
+                id: 'ORD-2024-003',
+                date: '2024-01-13',
+                dateFormatted: 'Jan 13, 2024',
+                time: '4:15 PM',
+                status: 'delivered',
+                recipient: 'Emily Rodriguez',
+                address: '789 Pine Rd, Queens, NY 11354'
+            },
+            {
+                id: 'ORD-2024-004',
+                date: '2024-01-12',
+                dateFormatted: 'Jan 12, 2024',
+                time: '9:20 AM',
+                status: 'delivered',
+                recipient: 'David Thompson',
+                address: '321 Elm St, Manhattan, NY 10002'
+            },
+            {
+                id: 'ORD-2024-005',
+                date: '2024-01-11',
+                dateFormatted: 'Jan 11, 2024',
+                time: '3:00 PM',
+                status: 'cancelled',
+                recipient: 'Jessica Williams',
+                address: '654 Maple Dr, Bronx, NY 10451'
+            },
+            {
+                id: 'ORD-2024-006',
+                date: '2024-01-10',
+                dateFormatted: 'Jan 10, 2024',
+                time: '1:30 PM',
+                status: 'in-progress',
+                recipient: 'Robert Brown',
+                address: '987 Cedar Ln, Staten Island, NY 10301'
+            },
+            {
+                id: 'ORD-2024-007',
+                date: '2024-01-09',
+                dateFormatted: 'Jan 9, 2024',
+                time: '10:15 AM',
+                status: 'pending',
+                recipient: 'Amanda Garcia',
+                address: '147 Birch St, Brooklyn, NY 11215'
+            },
+            {
+                id: 'ORD-2024-008',
+                date: '2024-01-08',
+                dateFormatted: 'Jan 8, 2024',
+                time: '5:45 PM',
+                status: 'delivered',
+                recipient: 'Christopher Lee',
+                address: '258 Walnut Ave, Manhattan, NY 10003'
+            }
+        ];
+
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        // Update filter counts
+        function updateFilterCounts() {
+            const counts = {
+                all: allOrders.length,
+                pending: allOrders.filter(o => o.status === 'pending').length,
+                'in-progress': allOrders.filter(o => o.status === 'in-progress').length,
+                delivered: allOrders.filter(o => o.status === 'delivered').length,
+                cancelled: allOrders.filter(o => o.status === 'cancelled').length
+            };
+
+            Object.keys(counts).forEach(key => {
+                const element = document.getElementById(`count-${key}`);
+                if (element) {
+                    element.textContent = counts[key];
+                }
+            });
+        }
+
+        // Get status badge HTML
+        function getStatusBadge(status) {
+            const statusClasses = {
+                'pending': 'status-pending',
+                'in-progress': 'status-in-progress',
+                'delivered': 'status-delivered',
+                'cancelled': 'status-cancelled'
+            };
+
+            const statusLabels = {
+                'pending': 'Pending',
+                'in-progress': 'In Progress',
+                'delivered': 'Delivered',
+                'cancelled': 'Cancelled'
+            };
+
+            return `<span class="status-badge ${statusClasses[status]}">${statusLabels[status]}</span>`;
+        }
+
+        // Filter orders
+        function getFilteredOrders() {
+            let filtered = allOrders;
+
+            // Apply status filter
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(order => order.status === currentFilter);
+            }
+
+            // Apply search filter
+            if (searchTerm) {
+                const search = searchTerm.toLowerCase();
+                filtered = filtered.filter(order => 
+                    order.id.toLowerCase().includes(search) ||
+                    order.recipient.toLowerCase().includes(search) ||
+                    order.address.toLowerCase().includes(search)
+                );
+            }
+
+            return filtered;
+        }
+
+        // Render orders table
+        function renderOrders() {
+            const tbody = document.getElementById('ordersTableBody');
+            const emptyState = document.getElementById('emptyState');
+            const resultsCount = document.getElementById('resultsCount');
+            const filteredOrders = getFilteredOrders();
+
+            if (filteredOrders.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                document.querySelector('.orders-table').style.display = 'none';
+                resultsCount.textContent = 'No orders found';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            document.querySelector('.orders-table').style.display = 'block';
+            resultsCount.textContent = `Showing ${filteredOrders.length} order${filteredOrders.length !== 1 ? 's' : ''}`;
+
+            tbody.innerHTML = filteredOrders.map(order => `
+                <tr>
+                    <td>
+                        <span class="order-id-cell">${order.id}</span>
+                    </td>
+                    <td>
+                        <div>${order.dateFormatted}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.75rem;">${order.time}</div>
+                    </td>
+                    <td>${getStatusBadge(order.status)}</td>
+                    <td>
+                        <div class="delivery-info">
+                            <span class="recipient-name">${order.recipient}</span>
+                            <span class="recipient-address">${order.address}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-icon btn-view" onclick="viewOrder('${order.id}')" title="View Details">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn-icon btn-cancel" onclick="cancelOrder('${order.id}')" 
+                                ${order.status === 'delivered' || order.status === 'cancelled' ? 'disabled' : ''} 
+                                title="Cancel Order">
+                                <i class="bi bi-x-circle"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // View order details
+        function viewOrder(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (order) {
+                alert(`Viewing order details:\n\nOrder ID: ${order.id}\nRecipient: ${order.recipient}\nAddress: ${order.address}\nStatus: ${order.status}\nDate: ${order.dateFormatted} at ${order.time}`);
+            }
+        }
+
+        // Cancel order
+        function cancelOrder(orderId) {
+            const order = allOrders.find(o => o.id === orderId);
+            if (order && order.status !== 'delivered' && order.status !== 'cancelled') {
+                if (confirm(`Are you sure you want to cancel order ${orderId}?`)) {
+                    order.status = 'cancelled';
+                    updateFilterCounts();
+                    renderOrders();
+                    alert(`Order ${orderId} has been cancelled.`);
+                }
+            }
+        }
+
+        // Filter tabs event listeners
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Update filter
+                currentFilter = this.dataset.filter;
+                
+                // Render orders
+                renderOrders();
+            });
+        });
+
+        // Search input event listener
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            searchTerm = e.target.value;
+            renderOrders();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateFilterCounts();
+            renderOrders();
+        });
+    </script>
+</body>
+</html>
