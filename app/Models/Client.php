@@ -8,6 +8,6 @@ class Client extends Utilisateur{
     }
     public function deconnexion()
     {
-        
+
     }
 }
