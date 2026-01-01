@@ -1,18 +1,18 @@
 <?php
 
 
-class Livreur extends Utilisateur {
+class Livreur extends User {
      
 
 
 
     public function connexion()
     {
-        
+
     }
     public function  deconnexion()
     {
-       
+        
     }
 }
 

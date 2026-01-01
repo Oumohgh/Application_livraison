@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate Delivery - Deliv'It</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+
+<body class="bg-light">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container py-2">
+            <a class="navbar-brand fw-bold fs-3 text-warning" href="index.html">
+                <i class="bi bi-box-seam"></i> Deliv'It
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="client-dashboard.html">
+                            <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link">Welcome, <strong>John Doe</strong></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-danger rounded-pill px-4" href="login.html">
+                            <i class="bi bi-box-arrow-right me-2"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <!-- Page Header -->
+                <div class="mb-4">
+                    <h2 class="fw-bold mb-2">
+                        <i class="bi bi-clipboard-check text-warning me-2"></i>Validate Delivery
+                    </h2>
+                    <p class="text-muted">Please confirm that you have received your delivery</p>
+                </div>
+
+                <!-- Success Alert (Hidden by default) -->
+                <div id="successAlert" class="alert alert-success alert-dismissible fade d-none" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <strong>Delivery Confirmed!</strong> Thank you for confirming your delivery. The delivery driver has been notified.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <!-- Order Summary Card -->
+                <div class="card shadow-sm border-0 rounded-3 mb-4">
+                    <div class="card-header bg-white border-0 pt-4 pb-3">
+                        <h5 class="fw-bold mb-0">
+                            <i class="bi bi-info-circle text-warning me-2"></i>Order Summary
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Order Reference:</span>
+                                    <span class="fw-bold text-warning fs-5">#DLV001234</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="my-2">
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Delivery Status:</span>
+                                    <span class="badge bg-info rounded-pill">Delivered</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="my-2">
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Delivery Date:</span>
+                                    <span class="fw-semibold">2025-01-15 14:30</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="my-2">
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-muted">Driver:</span>
+                                    <span class="fw-semibold">Pierre Martin</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="my-2">
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <span class="text-muted">Pickup Location:</span>
+                                    <span class="fw-semibold text-end">123 Main St, Paris 75001</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <hr class="my-2">
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <span class="text-muted">Delivery Location:</span>
+                                    <span class="fw-semibold text-end">456 Oak Ave, Lyon 69001</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Items Card -->
+                <div class="card shadow-sm border-0 rounded-3 mb-4">
+                    <div class="card-header bg-white border-0 pt-4 pb-3">
+                        <h5 class="fw-bold mb-0">
+                            <i class="bi bi-box-seam text-warning me-2"></i>Delivered Items
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item px-0 py-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="fw-semibold mb-1">
+                                            <i class="bi bi-check-circle text-success me-2"></i>Electronics Package
+                                        </h6>
+                                        <small class="text-muted">Quantity: 2 | Weight: 5.0 kg</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item px-0 py-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="fw-semibold mb-1">
+                                            <i class="bi bi-check-circle text-success me-2"></i>Documents
+                                        </h6>
+                                        <small class="text-muted">Quantity: 1 | Weight: 0.5 kg</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item px-0 py-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h6 class="fw-semibold mb-1">
+                                            <i class="bi bi-check-circle text-success me-2"></i>Fragile Items
+                                        </h6>
+                                        <small class="text-muted">Quantity: 3 | Weight: 2.5 kg</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-3 border-top">
+                            <div class="d-flex justify-content-between">
+                                <span class="fw-bold">Total Weight:</span>
+                                <span class="fw-bold text-warning">8.0 kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Validation Form -->
+                <div class="card shadow-sm border-0 rounded-3 mb-4" id="validationCard">
+                    <div class="card-header bg-white border-0 pt-4 pb-3">
+                        <h5 class="fw-bold mb-0">
+                            <i class="bi bi-clipboard-check text-warning me-2"></i>Confirm Receipt
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="validationForm" method="POST" action="#" novalidate>
+                            
+                            <input type="hidden" name="order_id" value="1234">
+                            
+                            <!-- Delivery Condition -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-box me-1"></i>Package Condition
+                                </label>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="condition" id="conditionGood" value="good" checked required>
+                                    <label class="form-check-label" for="conditionGood">
+                                        <i class="bi bi-emoji-smile text-success me-1"></i>Good - Package received in perfect condition
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="condition" id="conditionDamaged" value="damaged" required>
+                                    <label class="form-check-label" for="conditionDamaged">
+                                        <i class="bi bi-exclamation-triangle text-warning me-1"></i>Damaged - Package has minor damage
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="condition" id="conditionSevere" value="severe" required>
+                                    <label class="form-check-label" for="conditionSevere">
+                                        <i class="bi bi-x-circle text-danger me-1"></i>Severely Damaged - Package is heavily damaged
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Additional Comments -->
+                            <div class="mb-4">
+                                <label for="comments" class="form-label fw-semibold">
+                                    <i class="bi bi-chat-left-text me-1"></i>Additional Comments (Optional)
+                                </label>
+                                <textarea class="form-control" id="comments" name="comments" rows="3" 
+                                          placeholder="Any additional feedback about your delivery..."></textarea>
+                            </div>
+
+                            <!-- Rating -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">
+                                    <i class="bi bi-star me-1"></i>Rate Your Experience
+                                </label>
+                                <div class="d-flex gap-2">
+                                    <input type="radio" class="btn-check" name="rating" id="rating1" value="1" required>
+                                    <label class="btn btn-outline-warning" for="rating1">1 <i class="bi bi-star"></i></label>
+                                    
+                                    <input type="radio" class="btn-check" name="rating" id="rating2" value="2">
+                                    <label class="btn btn-outline-warning" for="rating2">2 <i class="bi bi-star"></i></label>
+                                    
+                                    <input type="radio" class="btn-check" name="rating" id="rating3" value="3">
+                                    <label class="btn btn-outline-warning" for="rating3">3 <i class="bi bi-star"></i></label>
+                                    
+                                    <input type="radio" class="btn-check" name="rating" id="rating4" value="4">
+                                    <label class="btn btn-outline-warning" for="rating4">4 <i class="bi bi-star"></i></label>
+                                    
+                                    <input type="radio" class="btn-check" name="rating" id="rating5" value="5" checked>
+                                    <label class="btn btn-outline-warning" for="rating5">5 <i class="bi bi-star"></i></label>
+                                </div>
+                            </div>
+
+                            <!-- Confirmation Checkbox -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="confirmReceipt" required>
+                                    <label class="form-check-label fw-semibold" for="confirmReceipt">
+                                        I confirm that I have received the delivery
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        You must confirm receipt before submitting
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Info Alert -->
+                            <div class="alert alert-info border-0 d-flex align-items-start" role="alert">
+                                <i class="bi bi-info-circle-fill me-2 mt-1"></i>
+                                <div>
+                                    <strong>Please Note:</strong> Once you confirm delivery, the payment will be released to the driver and this action cannot be undone.
+                                </div>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button type="submit" class="btn btn-warning text-white flex-grow-1">
+                                    <i class="bi bi-check-circle me-2"></i>Confirm Delivery
+                                </button>
+                                <a href="client-dashboard.html" class="btn btn-outline-secondary flex-grow-1">
+                                    <i class="bi bi-x-circle me-2"></i>Cancel
+                                </a>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="fw-bold text-warning mb-3">
+                        <i class="bi bi-box-seam"></i> Deliv'It
+                    </h5>
+                    <p class="text-white-50">Your trusted delivery partner for fast, reliable service.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 text-white-50">&copy; 2025 Deliv'It. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Form validation and submission
+        document.getElementById('validationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Bootstrap validation
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
+            }
+            
+            // Check if confirmation checkbox is checked
+            const confirmCheckbox = document.getElementById('confirmReceipt');
+            if (!confirmCheckbox.checked) {
+                confirmCheckbox.classList.add('is-invalid');
+                return;
+            }
+            
+            // Simulate form submission
+            // In production, this would send data to PHP backend
+            const formData = new FormData(this);
+            
+            // Show success message
+            const successAlert = document.getElementById('successAlert');
+            const validationCard = document.getElementById('validationCard');
+            
+            successAlert.classList.remove('d-none');
+            successAlert.classList.add('show');
+            
+            // Hide validation form
+            validationCard.style.display = 'none';
+            
+            // Scroll to top to show success message
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Redirect to dashboard after 3 seconds
+            setTimeout(function() {
+                window.location.href = 'client-dashboard.html';
+            }, 3000);
+        });
+        
+        // Remove invalid state when checkbox is checked
+        document.getElementById('confirmReceipt').addEventListener('change', function() {
+            if (this.checked) {
+                this.classList.remove('is-invalid');
+            }
+        });
+    </script>
+
+</body>
+</html>

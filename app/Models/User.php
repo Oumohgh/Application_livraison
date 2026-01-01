@@ -1,6 +1,6 @@
 <?php 
 
-abstract class Utilisateur {
+abstract class User {
 protected $name;
 protected $id;
 protected $email;

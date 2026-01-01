@@ -3,272 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Deliv'It - Smart Delivery Platform for fast, secure, and trackable deliveries">
-    <title>Deliv'It - Smart Delivery Platform</title>
+    <meta name="description" content="Deliv'It - Fast, reliable delivery service at your fingertips">
+    <title>Deliv'It - Fast & Reliable Delivery Service</title>
     
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <style>
-        /* Custom CSS Variables */
-        :root {
-            --primary-color: #4f46e5;
-            --primary-dark: #4338ca;
-            --primary-light: #eef2ff;
-        }
-
-        /* Base Styles */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: #111827;
-            line-height: 1.6;
-        }
-
-        /* Header Styles */
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            background-color: #ffffff !important;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .navbar-brand svg {
-            margin-right: 0.5rem;
-        }
-
-        .nav-link {
-            font-weight: 500;
-            color: #6b7280;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: var(--primary-color);
-        }
-
-        .btn-custom-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            padding: 0.625rem 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .btn-custom-primary:hover {
-            background-color: var(--primary-dark);
-            border-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
-        }
-
-        .btn-custom-secondary {
-            background-color: #f9fafb;
-            border: 1px solid #e5e7eb;
-            color: #111827;
-            font-weight: 600;
-            padding: 0.625rem 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .btn-custom-secondary:hover {
-            background-color: white;
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
-            padding: 5rem 0;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-        }
-
-        .hero-subtitle {
-            font-size: clamp(1.25rem, 3vw, 1.875rem);
-            color: #6b7280;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-description {
-            font-size: 1.125rem;
-            color: #6b7280;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-        }
-
-        .hero-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-            height: 100%;
-        }
-
-        .hero-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .hero-card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero-card h5 {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero-card p {
-            color: #6b7280;
-            margin-bottom: 0;
-        }
-
-        /* Features Section */
-        .features-section {
-            padding: 5rem 0;
-            background-color: white;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .section-description {
-            font-size: 1.125rem;
-            color: #6b7280;
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .feature-card {
-            padding: 2rem;
-            background-color: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 1rem;
-            transition: all 0.3s;
-            height: 100%;
-        }
-
-        .feature-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.1);
-            transform: translateY(-4px);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background-color: var(--primary-light);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-card h4 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card p {
-            color: #6b7280;
-            line-height: 1.7;
-            margin-bottom: 0;
-        }
-
-        /* Footer */
-        .footer {
-            background-color: #f9fafb;
-            border-top: 1px solid #e5e7eb;
-            padding: 3rem 0;
-        }
-
-        .footer-logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .footer-copyright {
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        /* Animations */
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            .hero-section {
-                padding: 3rem 0;
-            }
-            
-            .features-section {
-                padding: 3rem 0;
-            }
-        }
-    </style>
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
 <body>
-    <!-- Header / Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="32" height="32" rx="8" fill="#4F46E5"/>
-                    <path d="M16 8L22 12V20L16 24L10 20V12L16 8Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M16 16L22 12M16 16L10 12M16 16V24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Deliv'It
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container py-2">
+            <a class="navbar-brand fw-bold fs-3 text-warning" href="#">
+                <i class="bi bi-box-seam"></i> Deliv'It
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center">
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
                     <li class="nav-item">
                         <a class="nav-link" href="#features">Features</a>
                     </li>
-                    <li class="nav-item ms-lg-2">
-                        <a href="auth/login.html" class="btn btn-custom-secondary btn-sm">Login</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
                     </li>
-                    <li class="nav-item ms-lg-2">
-                        <a href="auth/register.html" class="btn btn-custom-primary btn-sm">Get Started</a>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-warning rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Login
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-warning text-white rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            Register
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -276,179 +45,302 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <h1 class="hero-title">Deliv'It</h1>
-                    <p class="hero-subtitle">Smart Delivery Platform</p>
-                    <p class="hero-description mx-auto" style="max-width: 42rem;">
-                        Experience the future of delivery services. Fast, reliable, and secure logistics 
-                        solutions that keep your business moving forward. Track every package in real-time 
-                        and deliver excellence with every shipment.
-                    </p>
-                    <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <a href="register.html" class="btn btn-custom-primary btn-lg">Register Now</a>
-                        <a href="login.html" class="btn btn-custom-secondary btn-lg">Login to Account</a>
+    <section class="bg-dark text-white py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1 class="display-3 fw-bold mb-4">Fast & Reliable Delivery at Your Fingertips</h1>
+                    <p class="fs-5 mb-4 opacity-75">Experience seamless delivery services with Deliv'It. From groceries to packages, we deliver what matters to you, when you need it.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <button class="btn btn-warning text-white btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            <i class="bi bi-rocket-takeoff"></i> Get Started
+                        </button>
+                        <button class="btn btn-outline-warning btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </button>
                     </div>
                 </div>
-            </div>
-            <div class="row g-4 mt-4">
-                <div class="col-md-4">
-                    <div class="hero-card fade-in-up">
-                        <div class="hero-card-icon">📦</div>
-                        <h5>Fast Delivery</h5>
-                        <p>Express shipping available</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="hero-card fade-in-up">
-                        <div class="hero-card-icon">🔒</div>
-                        <h5>Secure Payments</h5>
-                        <p>SSL encrypted transactions</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="hero-card fade-in-up">
-                        <div class="hero-card-icon">📍</div>
-                        <h5>Live Tracking</h5>
-                        <p>Real-time updates</p>
-                    </div>
+                <div class="col-lg-5 text-center d-none d-lg-block">
+                    <i class="bi bi-truck opacity-25" style="font-size: 15rem;"></i>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="features-section">
-        <div class="container">
-            <h2 class="section-title">Why Choose Deliv'It?</h2>
-            <p class="section-description">Everything you need for seamless delivery management</p>
-            
+    <section class="py-5 bg-light" id="features">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-dark">Why Choose Deliv'It?</h2>
+                <p class="lead text-secondary">Delivering excellence, one package at a time</p>
+            </div>
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card fade-in-up">
-                        <div class="feature-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L18 6V14L12 18L6 14V6L12 2Z" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 12L18 6M12 12L6 6M12 12V18" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="bi bi-lightning-charge-fill text-warning mb-3" style="font-size: 3rem;"></i>
+                            <h3 class="h4 fw-semibold mb-3">Lightning Fast</h3>
+                            <p class="text-secondary">Get your deliveries in record time with our optimized routing system and dedicated delivery partners.</p>
                         </div>
-                        <h4>Fast Delivery</h4>
-                        <p>
-                            Lightning-fast delivery times with our optimized routing system. 
-                            Get your packages delivered on time, every time, with express options available.
-                        </p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card fade-in-up">
-                        <div class="feature-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="7" y="7" width="10" height="12" rx="2" stroke="#4F46E5" stroke-width="2"/>
-                                <path d="M10 7V5C10 3.89543 10.8954 3 12 3C13.1046 3 14 3.89543 14 5V7" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="12" cy="13" r="2" fill="#4F46E5"/>
-                            </svg>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="bi bi-shield-check text-warning mb-3" style="font-size: 3rem;"></i>
+                            <h3 class="h4 fw-semibold mb-3">100% Secure</h3>
+                            <p class="text-secondary">Your packages are insured and tracked in real-time. Rest assured, your deliveries are in safe hands.</p>
                         </div>
-                        <h4>Secure Payments</h4>
-                        <p>
-                            Bank-level encryption and multiple payment options ensure your transactions 
-                            are always safe and secure. Pay with confidence.
-                        </p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="feature-card fade-in-up">
-                        <div class="feature-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="8" stroke="#4F46E5" stroke-width="2"/>
-                                <path d="M12 8V12L15 15" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="bi bi-geo-alt-fill text-warning mb-3" style="font-size: 3rem;"></i>
+                            <h3 class="h4 fw-semibold mb-3">Real-Time Tracking</h3>
+                            <p class="text-secondary">Know exactly where your package is at all times with our advanced GPS tracking system.</p>
                         </div>
-                        <h4>Real-Time Tracking</h4>
-                        <p>
-                            Track your deliveries in real-time with GPS precision. Get instant notifications 
-                            and updates from pickup to final delivery.
-                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="bi bi-clock-history text-warning mb-3" style="font-size: 3rem;"></i>
+                            <h3 class="h4 fw-semibold mb-3">24/7 Service</h3>
+                            <p class="text-secondary">We're always available to serve you. Schedule deliveries anytime, anywhere.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="bi bi-cash-coin text-warning mb-3" style="font-size: 3rem;"></i>
+                            <h3 class="h4 fw-semibold mb-3">Affordable Rates</h3>
+                            <p class="text-secondary">Quality delivery service without breaking the bank. Transparent pricing with no hidden fees.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm h-100 text-center p-4">
+                        <div class="card-body">
+                            <i class="bi bi-headset text-warning mb-3" style="font-size: 3rem;"></i>
+                            <h3 class="h4 fw-semibold mb-3">24/7 Support</h3>
+                            <p class="text-secondary">Our dedicated support team is always ready to help you with any questions or concerns.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="bg-warning text-white py-5">
+        <div class="container text-center py-4">
+            <h2 class="display-5 fw-bold mb-3">Ready to Get Started?</h2>
+            <p class="fs-5 mb-4 opacity-75">Join thousands of satisfied customers who trust Deliv'It for their delivery needs</p>
+            <button class="btn btn-light text-warning btn-lg rounded-pill px-5 fw-semibold" data-bs-toggle="modal" data-bs-target="#registerModal">
+                <i class="bi bi-person-plus"></i> Create Your Account Now
+            </button>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="bg-dark text-white py-5" id="about">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                <div class="footer-logo">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="32" height="32" rx="8" fill="#4F46E5"/>
-                        <path d="M16 8L22 12V20L16 24L10 20V12L16 8Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M16 16L22 12M16 16L10 12M16 16V24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span>Deliv'It</span>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="text-warning fw-semibold mb-3"><i class="bi bi-box-seam"></i> Deliv'It</h5>
+                    <p class="text-white-50">Fast, reliable, and secure delivery services at your fingertips. We're committed to delivering excellence.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3 fs-4" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3 fs-4" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3 fs-4" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white fs-4" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    </div>
                 </div>
-                <p class="footer-copyright mb-0">
-                    &copy; 2025 Deliv'It. All rights reserved.
-                </p>
+                <div class="col-md-2 mb-4">
+                    <h5 class="text-warning fw-semibold mb-3">Company</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#about" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#careers" class="text-white-50 text-decoration-none">Careers</a></li>
+                        <li class="mb-2"><a href="#press" class="text-white-50 text-decoration-none">Press</a></li>
+                        <li class="mb-2"><a href="#blog" class="text-white-50 text-decoration-none">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5 class="text-warning fw-semibold mb-3">Services</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#delivery" class="text-white-50 text-decoration-none">Delivery</a></li>
+                        <li class="mb-2"><a href="#tracking" class="text-white-50 text-decoration-none">Tracking</a></li>
+                        <li class="mb-2"><a href="#pricing" class="text-white-50 text-decoration-none">Pricing</a></li>
+                        <li class="mb-2"><a href="#api" class="text-white-50 text-decoration-none">API</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5 class="text-warning fw-semibold mb-3">Support</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#help" class="text-white-50 text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white-50 text-decoration-none">Contact Us</a></li>
+                        <li class="mb-2"><a href="#faq" class="text-white-50 text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#terms" class="text-white-50 text-decoration-none">Terms</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5 class="text-warning fw-semibold mb-3">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 text-white-50"><i class="bi bi-envelope"></i> info@delivit.com</li>
+                        <li class="mb-2 text-white-50"><i class="bi bi-phone"></i> +1 (555) 123-4567</li>
+                        <li class="mb-2 text-white-50"><i class="bi bi-geo-alt"></i> New York, NY</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top border-secondary pt-4 mt-4 text-center">
+                <p class="text-white-50 mb-0">&copy; 2025 Deliv'It. All rights reserved. | <a href="#privacy" class="text-white-50 text-decoration-none">Privacy Policy</a> | <a href="#terms" class="text-white-50 text-decoration-none">Terms of Service</a></p>
             </div>
         </div>
     </footer>
 
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold" id="loginModalLabel">Login to Deliv'It</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="#" id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="loginEmail" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" name="password" required placeholder="Enter your password">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-warning text-white w-100 mb-2">Login</button>
+                        <div class="text-center">
+                            <a href="#" class="text-muted small text-decoration-none">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <p class="text-muted mb-0 small">Don't have an account? <a href="#" class="text-warning text-decoration-none" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold" id="registerModalLabel">Create Your Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="#" id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="registerName" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="registerEmail" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="registerPhone" name="phone" required placeholder="Enter your phone number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" name="password" required placeholder="Create a password" minlength="8">
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="registerConfirmPassword" name="confirm_password" required placeholder="Confirm your password">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreeTerms" name="terms" required>
+                            <label class="form-check-label small" for="agreeTerms">I agree to the <a href="#" class="text-warning text-decoration-none">Terms & Conditions</a></label>
+                        </div>
+                        <button type="submit" class="btn btn-warning text-white w-100 mb-2">Create Account</button>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 justify-content-center">
+                    <p class="text-muted mb-0 small">Already have an account? <a href="#" class="text-warning text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    
     <!-- Custom JavaScript -->
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all fade-in elements
-        document.querySelectorAll('.fade-in-up').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Add parallax effect on scroll (optional enhancement)
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrolled = window.pageYOffset;
-                    const heroCards = document.querySelectorAll('.hero-card');
-                    heroCards.forEach((card, index) => {
-                        const speed = 0.05 * (index + 1);
-                        card.style.transform = `translateY(${scrolled * speed}px)`;
-                    });
-                    ticking = false;
-                });
-                ticking = true;
+        // Form Validation
+        (function() {
+            'use strict';
+            
+            // Login Form Validation
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(event) {
+                    if (!loginForm.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    loginForm.classList.add('was-validated');
+                }, false);
             }
-        });
+            
+            // Register Form Validation
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    const password = document.getElementById('registerPassword').value;
+                    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                    
+                    if (password !== confirmPassword) {
+                        alert('Passwords do not match!');
+                        return false;
+                    }
+                    
+                    if (!registerForm.checkValidity()) {
+                        event.stopPropagation();
+                        registerForm.classList.add('was-validated');
+                        return false;
+                    }
+                    
+                    registerForm.classList.add('was-validated');
+                }, false);
+            }
+            
+            // Smooth Scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href !== '#' && href !== '#loginModal' && href !== '#registerModal') {
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+        })();
     </script>
 </body>
 </html>

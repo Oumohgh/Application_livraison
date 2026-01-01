@@ -1,6 +1,6 @@
 <?php
 
-class Client extends Utilisateur{
+class Client extends User{
  
     public function connexion()
     {
