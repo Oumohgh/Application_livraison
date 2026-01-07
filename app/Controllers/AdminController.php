@@ -1,6 +1,4 @@
-
-
-    <?php
+<?php
       class Controller
       {
         private $db_con = false;
