@@ -1,11 +1,5 @@
 <?php
-/**
- * Create Commande View
- * 
- * Displays the form for clients to create a new commande.
- */
 
-// Page title is set by controller
 $pageTitle = $pageTitle ?? 'Créer une commande';
 ?>
 

@@ -1,11 +1,5 @@
 <?php
-/**
- * Create Offer View
- * 
- * Displays the form for livreurs to create an offer for a commande.
- */
 
-// Page title is set by controller
 $pageTitle = $pageTitle ?? 'Faire une offre';
 ?>
 

@@ -1,11 +1,6 @@
 <?php
-/**
- * Admin Dashboard View
- * 
- * Displays statistics and overview for administrators.
- */
 
-// Page title is set by controller
+
 $pageTitle = $pageTitle ?? 'Tableau de bord Admin';
 ?>
 

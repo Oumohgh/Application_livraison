@@ -1,11 +1,5 @@
 <?php
-/**
- * Login View
- * 
- * Displays the login form for users to authenticate.
- */
 
-// Page title is set by controller
 $pageTitle = $pageTitle ?? 'Connexion';
 ?>
 

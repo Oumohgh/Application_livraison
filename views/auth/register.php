@@ -1,11 +1,5 @@
 <?php
-/**
- * Register View
- * 
- * Displays the registration form for new users.
- */
 
-// Page title is set by controller
 $pageTitle = $pageTitle ?? 'Inscription';
 ?>
 

@@ -1,28 +1,13 @@
 <?php
-/**
- * Layout Template
- * 
- * Main layout file that wraps all views.
- * Includes header, main content area, and footer.
- * 
- * View file path is set by Controller::loadView() method.
- */
 
-// Flash class is loaded via Composer autoload in public/index.php
-// Use fully qualified name since this is a view file (no namespace)
-
-// View file is set by Controller::loadView()
-// If not set, default to login view
 if (!isset($viewFile)) {
     $viewFile = __DIR__ . '/auth/login.php';
 }
 
-// Verify view file exists, otherwise use login
 if (!file_exists($viewFile)) {
     $viewFile = __DIR__ . '/auth/login.php';
 }
 
-// Page title is set by Controller or defaults to 'Delivry'
 $pageTitle = $pageTitle ?? 'Delivry';
 ?>
 <!DOCTYPE html>
@@ -74,7 +59,7 @@ $pageTitle = $pageTitle ?? 'Delivry';
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2024 Delivry - Application de livraison simple</p>
+            <p>&copy; 2026 Delivry - Application de livraison simple</p>
         </div>
     </footer>
 </body>

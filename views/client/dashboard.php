@@ -1,11 +1,5 @@
 <?php
-/**
- * Client Dashboard View
- * 
- * Displays all commandes created by the logged-in client.
- */
 
-// Page title is set by controller
 $pageTitle = $pageTitle ?? 'Tableau de bord Client';
 ?>
 

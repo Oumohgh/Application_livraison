@@ -1,12 +1,5 @@
 <?php
-/**
- * Show Commande View
- * 
- * Displays details of a commande and all offers made for it.
- * Client can accept an offer from this page.
- */
 
-// Page title is set by controller
 $pageTitle = $pageTitle ?? 'Détails de la commande';
 ?>
 

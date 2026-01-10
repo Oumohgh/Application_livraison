@@ -1,11 +1,5 @@
 <?php
-/**
- * Livreur Dashboard View
- * 
- * Displays available commandes and livreur's accepted commandes.
- */
 
-// Page title is set by controller
 $pageTitle = $pageTitle ?? 'Tableau de bord Livreur';
 ?>
 
