@@ -28,7 +28,7 @@ $pageTitle = $pageTitle ?? 'Inscription';
     </div>
 
     <div class="form-group">
-        <label for="role">Rôle:</label>
+        <label for="role">Role:</label>
         <select id="role" name="role" required>
             <option value="client">Client</option>
             <option value="livreur">Livreur</option>
